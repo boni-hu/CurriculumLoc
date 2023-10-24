@@ -1,0 +1,12 @@
+mavic-river 
+mavic-factory
+mavic-fengniao
+mavic-hongkong
+inspire1-rail-kfs
+phantom3-grass-kfs
+phantom3-centralPark-kfs
+phantom3-npu-kfs
+phantom3-freeway-kfs
+phantom3-village-kfs
+gopro-npu-kfs
+gopro-saplings-kfs 

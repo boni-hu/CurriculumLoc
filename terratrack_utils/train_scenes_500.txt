@@ -1,0 +1,1 @@
+mavic_npu
