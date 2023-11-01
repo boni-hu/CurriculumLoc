@@ -18,7 +18,6 @@ import warnings
 from lib.dataset_terra import TerraDataset
 from lib.exceptions import NoGradientError
 from lib.loss import loss_function
-from lib.full_model.model_d2 import D2Net
 from lib.full_model.model_swin_unet_d2 import Swin_D2UNet
 from lib.full_model.model_unet import U2Net
 from torch.utils.tensorboard import SummaryWriter
@@ -95,10 +94,7 @@ parser.add_argument(
     '--checkpoint_directory', type=str, default='checkpoints',
     help='directory for training checkpoints'
 )
-# parser.add_argument(
-#     '--checkpoint_prefix', type=str, default='d2',
-#     help='prefix for training checkpoints'
-# )
+
 parser.add_argument(
     '--net', type=str, default='vgg',
     help='choose net vgg or swin'
@@ -116,12 +112,8 @@ if args.plot:
         os.mkdir(plot_path)
 
 # Creating CNN model
-if args.net=='vgg':
-    model = D2Net(
-        model_file=args.model_file,
-        use_cuda=use_cuda
-    )
-elif args.net=='swin':
+
+if args.net=='swin':
     model = Swin_D2UNet(
         # model_file=args.model_file,
         use_cuda=use_cuda

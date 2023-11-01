@@ -12,26 +12,15 @@ import math
 import os
 from os.path import exists
 from os.path import join
-# torch.cuda.current_device()
-# torch.cuda._initialized = True
 
 
 #time count
 start = time.perf_counter()
 
 _RESIDUAL_THRESHOLD = 20
-'''
-/home/a409/users/huboni/Projects/dataset/GPR_competition/round2/Val/reference_images/offset_0_None/000001.png
-/home/a409/users/huboni/Projects/dataset/GPR_competition/round2/Val/reference_images/offset_0_None/000002.png
-/home/a409/users/huboni/Projects/dataset/GPR_competition/round2/Val/reference_images/offset_0_None/000000.png
-/home/a409/users/huboni/Projects/dataset/GPR_competition/round2/Val/reference_images/offset_20_North/000002.png
-/home/a409/users/huboni/Projects/dataset/GPR_competition/round2/Val/reference_images/offset_40_South/000002.png
-'''
 
-#Test1
 imgfile1 = '/home/a409/users/huboni/Paper/locally_global_match_pnp/fig/fig-matching/q000000.png'
 imgfile2 = '/home/a409/users/huboni/Paper/locally_global_match_pnp/fig/fig-matching/r000000.png'
-# imgfile1 = 'df-ms-data/1/df-uav-sar-500.jpg'
 
 start = time.perf_counter()
 
@@ -53,9 +42,7 @@ start = time.perf_counter()
 #Flann特征匹配
 FLANN_INDEX_KDTREE = 1
 index_params = dict(algorithm=FLANN_INDEX_KDTREE, trees=5)
-# 这里使用的是KTreeIndex配置索引，指定待处理核密度树的数量（理想的数量在1-16）。
 search_params = dict(checks=40)
-# 用它来指定递归遍历的次数。值越高结果越准确，但是消耗的时间也越多。实际上，匹配效果很大程度上取决于输入。
 flann = cv2.FlannBasedMatcher(index_params, search_params)
 matches = flann.knnMatch(des_left, des_right, k=2)
 matches_reverse = flann.knnMatch(des_right, des_left, k=2)
@@ -65,23 +52,18 @@ goodMatch = []
 locations_1_to_use = []
 locations_2_to_use = []
 
-# 匹配对筛选
 disdif_avg = 0
-# 统计平均距离差 第一匹配点和第二匹配点的距离差均值
 for m, n in matches:
     disdif_avg += n.distance - m.distance
     disdif_avg = disdif_avg / len(matches)
 
 for m, n in matches:
-    #自适应阈值
-    # if n.distance > m.distance + disdif_avg:
     if n.distance > m.distance + disdif_avg and matches_reverse[m.trainIdx][1].distance > matches_reverse[m.trainIdx][0].distance+disdif_avg and matches_reverse[m.trainIdx][0].trainIdx == m.queryIdx:
         goodMatch.append(m)
         p2 = cv2.KeyPoint(kps_right[m.trainIdx][0],  kps_right[m.trainIdx][1],  1)
         p1 = cv2.KeyPoint(kps_left[m.queryIdx][0], kps_left[m.queryIdx][1], 1)
         locations_1_to_use.append([p1.pt[0], p1.pt[1]])
         locations_2_to_use.append([p2.pt[0], p2.pt[1]])
-#goodMatch = sorted(goodMatch, key=lambda x: x.distance)
 print('match num is %d' % len(goodMatch))
 locations_1_to_use = np.array(locations_1_to_use)
 locations_2_to_use = np.array(locations_2_to_use)
