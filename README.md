@@ -3,7 +3,7 @@
 <img src="./fig/outline.png" style="zoom:48%;" />
 
 ## Introduction
-CurriculumLoc is a PyTorch implementation for our paper "CurriculumLoc: Multi-perspective Attention for Visual Geo-Localization". If you use this code for your research, please cite our paper. For additional questions contact us via huboni@mail.nwpu.edu.cn or huboni7@gmail.com.
+CurriculumLoc is a PyTorch implementation for our paper ["CurriculumLoc: Enhancing Cross-Domain Geolocalization through Multi-Stage Refinement"](https://arxiv.org/abs/2311.11604). If you use this code for your research, please cite our paper. For additional questions contact us via huboni@mail.nwpu.edu.cn or huboni7@gmail.com.
 
 
 ## Installation
@@ -34,5 +34,22 @@ python train_terra.py
 
 ```
 python match_localization.py 
+```
+
+
+
+## Acknowledgement
+
+If you're using CurculumLoc in your research or applications, please cite using this BibTeX:
+
+```bibtex
+@misc{hu2023curriculumloc,
+      title={CurriculumLoc: Enhancing Cross-Domain Geolocalization through Multi-Stage Refinement}, 
+      author={Boni Hu and Lin Chen and Runjian Chen and Shuhui Bu and Pengcheng Han and Haowei Li},
+      year={2023},
+      eprint={2311.11604},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV}
+}
 ```
 
