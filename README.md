@@ -38,7 +38,7 @@ python match_localization.py
 
 
 
-## Acknowledgement
+## Citation
 
 If you're using CurculumLoc in your research or applications, please cite using this BibTeX:
 
