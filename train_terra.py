@@ -111,8 +111,6 @@ if args.plot:
     else:
         os.mkdir(plot_path)
 
-# Creating CNN model
-
 if args.net=='swin':
     model = Swin_D2UNet(
         # model_file=args.model_file,

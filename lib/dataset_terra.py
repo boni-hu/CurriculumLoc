@@ -64,8 +64,6 @@ class TerraDataset(Dataset):
             overlap_matrix = scene_info['overlap_matrix']
             scale_ratio_matrix = scene_info['scale_ratio_matrix']
 
-            ## FIXME 图像重叠率大于最小，小于最大，这样限制的原因是：
-            ## FIXME 如果两个点的深度值较为接近，则认为它们是同一实体的一部分，可以进行匹配
             valid =  np.logical_and(
                 np.logical_and(
                     overlap_matrix >= self.min_overlap_ratio,
@@ -76,7 +74,6 @@ class TerraDataset(Dataset):
             # 得到匹配对
             pairs = np.vstack(np.where(valid))
             # 如果该场景中配配对<self.pairs_per_scene 则跳出该循环，进行下一个场景的计算
-            ## FIXME 这一步相当于再次进行删选，注意这个超参数的选择
             try:
                 selected_ids = np.random.choice(
                     pairs.shape[1], self.pairs_per_scene
@@ -178,7 +175,6 @@ class TerraDataset(Dataset):
         # 通过centeral_match确定两张图像需要保留的区域，并计算出响应的边界框
         image1, bbox1, image2, bbox2 = self.crop(image1, image2, central_match)
 
-        ## FIXME 深度图和RGB图像都对应的根据匹配对坐标进行裁剪，用于后续匹配训练？
         depth1 = depth1[
             bbox1[0] : bbox1[0] + self.image_size,
             bbox1[1] : bbox1[1] + self.image_size
